@@ -2,6 +2,8 @@
 *.db
 env_keys.json
 test.py
+functions.ipynb
+untappd.ipynb
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
