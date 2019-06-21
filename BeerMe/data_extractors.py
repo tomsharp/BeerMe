@@ -140,24 +140,15 @@ def beer_df2db(beer_df, db_path, table_name='user_extract'):
     import sqlite3
     with sqlite3.connect(db_path) as conn:
         beer_df.to_sql(table_name, conn, if_exists='append', index=False)
-    print("beer succesfully saved! (db path = ) " + db_path)
+    print("beer succesfully saved! (db path = " + db_path + ")")
 
-#(n_users, username, untappd_username, untappd_password, driver):
-#    users_scraped = 0
-#    while users_scraped < n_users:
-#        scrape_user_beerhistroy(username, untappd_username, untappd_password, driver)
-#        # connect to db and write to db
-#        db_path = DB_PATH
-#        import sqlite3
-#        with sqlite3.connect(db_path) as conn:
-#            beer_df.to_sql('user_extract', conn, if_exists='append', index=False)
-#        
-#        users_scraped += 1
-#        
-#        # navigate
-#        print("finding user #" + str(users_scraped) + "friends...")
-#        url = 'https://untappd.com/user/' + username + '/friends'
-#        driver.get(url)
-#        user = driver.find_element_by_class_name("user")
-#        user.find_element_by_tag_name("a").click()
-#        username = driver.current_url.split('user/')[1]
+def random_walk(n_users, starting_username, driver, db_path):
+    username = starting_username
+    users_scraped = 0
+    while users_scraped < n_users:
+        beer_df = get_beer_history(username, driver)
+        beer_df2db(beer_df, db_path)
+        users_scraped += 1
+        print(users_scraped)
+        username = find_next_friend(username, driver)
+        
