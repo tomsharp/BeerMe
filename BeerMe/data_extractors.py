@@ -5,21 +5,30 @@ Spyder Editor
 This is a temporary script file.
 """
 
+def BreweryDB_request(uri, endpoint, options={}, api_key=""):
+    if api_key == "":
+        raise ValueError("Please pass in an API key")
+    else:
+        import requests
+        url = uri + '/' + endpoint + '/' 
+        options['key'] = api_key
+        response = requests.get(url, options)
+        return response
 
-def scrape_user_beerhistroy(username, untappd_username, untappd_password, chrome_path):
-    import pandas as pd
-    import math
-    import time
-    from selenium import webdriver
 
+def login_untappd(untappd_username, untappd_password, driver):
     # login
     print("logging into Untappd...")
     login_url = 'https://untappd.com/login'
-    driver = webdriver.Chrome(chrome_path)
     driver.get(login_url)
     driver.find_element_by_id("username").send_keys(untappd_username)
     driver.find_element_by_id("password").send_keys(untappd_password)
     driver.find_element_by_xpath("/html/body/div/div/div/form/span/input").click()
+
+def get_beer_history(username, driver):
+    import pandas as pd
+    import math
+    import time
     
     # navigate
     print("finding user...")
@@ -33,6 +42,7 @@ def scrape_user_beerhistroy(username, untappd_username, untappd_password, chrome
     
     # close app download banner
     try:
+        time.sleep(2)
         iframe = driver.find_element_by_id("branch-banner-iframe")
         driver.switch_to.frame(iframe)
         driver.find_element_by_id("branch-banner-close").click()
@@ -107,15 +117,41 @@ def scrape_user_beerhistroy(username, untappd_username, untappd_password, chrome
     print("dataframe complete. enjoy your beer!")
     return beer_df
 
-def BreweryDB_request(uri, endpoint, options={}, api_key=""):
-    if api_key == "":
-        raise ValueError("Please pass in an API key")
-    else:
-        import requests
-        url = uri + '/' + endpoint + '/' 
-        options['key'] = api_key
-        response = requests.get(url, options)
-        return response
+def find_next_friend(username, driver):
+    # navigate
+    print("finding user's top friend...")
+    url = 'https://untappd.com/user/' + username + '/friends'
+    driver.get(url)
+    user = driver.find_element_by_class_name("user")
+    user.find_element_by_tag_name("a").click()
+    username = driver.current_url.split('user/')[1]
+    
+    return username
 
+def beer_df2db(beer_df, db_path, table_name='user_extract'):
+    # connect to db and write to db
+    print("saving your beer for later...")
+    import sqlite3
+    with sqlite3.connect(db_path) as conn:
+        beer_df.to_sql(table_name, conn, if_exists='append', index=False)
+    print("beer succesfully saved! (db path = ) " + db_path)
 
-
+#(n_users, username, untappd_username, untappd_password, driver):
+#    users_scraped = 0
+#    while users_scraped < n_users:
+#        scrape_user_beerhistroy(username, untappd_username, untappd_password, driver)
+#        # connect to db and write to db
+#        db_path = DB_PATH
+#        import sqlite3
+#        with sqlite3.connect(db_path) as conn:
+#            beer_df.to_sql('user_extract', conn, if_exists='append', index=False)
+#        
+#        users_scraped += 1
+#        
+#        # navigate
+#        print("finding user #" + str(users_scraped) + "friends...")
+#        url = 'https://untappd.com/user/' + username + '/friends'
+#        driver.get(url)
+#        user = driver.find_element_by_class_name("user")
+#        user.find_element_by_tag_name("a").click()
+#        username = driver.current_url.split('user/')[1]
