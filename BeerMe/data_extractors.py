@@ -31,7 +31,7 @@ def get_beer_history(username, driver):
     import time
     
     # navigate
-    print("finding user...")
+    print("navigating to user's profile...")
     url = 'https://untappd.com/user/' + username + '/beers'
     driver.get(url)
     
@@ -118,15 +118,21 @@ def get_beer_history(username, driver):
     return beer_df
 
 def find_next_friend(username, driver):
+    import numpy as np
+    
     # navigate
-    print("finding user's top friend...")
+    print("finding a drinking buddy...")
     url = 'https://untappd.com/user/' + username + '/friends'
     driver.get(url)
-    user = driver.find_element_by_class_name("user")
-    user.find_element_by_tag_name("a").click()
-    username = driver.current_url.split('user/')[1]
     
-    return username
+    # pick random friend
+    friends = driver.find_elements_by_class_name("friend-item")
+    n_friends = len(friends)
+    rand_num = np.random.randint(0, n_friends)
+    friend = friends[rand_num].text.split('\n')[1]
+    
+    print(str(friend) + " is your new drinking buddy!")
+    return friend
 
 def beer_df2db(beer_df, db_path, table_name='user_extract'):
     # connect to db and write to db
