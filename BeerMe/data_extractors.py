@@ -15,6 +15,23 @@ def BreweryDB_request(uri, endpoint, options={}, api_key=""):
         response = requests.get(url, options)
         return response
 
+def search_beer_BreweryDB(beer_name, api_key):
+    import json
+    uri = 'https://sandbox-api.brewerydb.com/v2'
+    full_beer_options = {'withBreweries':'Y',
+                          'withSocialAccounts': 'Y',
+                          'withIngredients':'Y'}
+    search_options = {**{'type': 'beer', 
+                         'q': beer_name}, 
+                      **full_beer_options}
+
+    search_response = BreweryDB_request(uri=uri, 
+                                        endpoint='search', 
+                                        options = search_options,
+                                        api_key=api_key)
+    
+    return json.loads(search_response.text)
+    
 
 def login_untappd(untappd_username, untappd_password, driver):
     # login
@@ -58,7 +75,7 @@ def get_beer_history(username, driver):
             driver.find_element_by_class_name("more-list-items").click()
             clicks_made += 1
         except:
-            time.sleep(1.5)
+            time.sleep(10)
     
     # gather beers
     beers = driver.find_elements_by_class_name("beer-item")

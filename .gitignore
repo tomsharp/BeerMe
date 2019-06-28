@@ -1,9 +1,6 @@
 # Project specific
 *.db
-env_keys.json
-test.py
-functions.ipynb
-untappd.ipynb
+/_gitignore
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
