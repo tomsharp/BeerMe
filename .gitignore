@@ -1,6 +1,10 @@
 # Project specific
+env_keys.json
 *.db
-/_gitignore
+/gitignore
+/data
+test.py
+scratch.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
