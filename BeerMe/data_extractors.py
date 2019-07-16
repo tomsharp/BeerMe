@@ -1,37 +1,9 @@
 # -*- coding: utf-8 -*-
-"""
-Spyder Editor
 
-This is a temporary script file.
-"""
 
-def BreweryDB_request(uri, endpoint, options={}, api_key=""):
-    if api_key == "":
-        raise ValueError("Please pass in an API key")
-    else:
-        import requests
-        url = uri + '/' + endpoint + '/' 
-        options['key'] = api_key
-        response = requests.get(url, options)
-        return response
-
-def search_beer_BreweryDB(beer_name, api_key):
-    import json
-    uri = 'https://sandbox-api.brewerydb.com/v2'
-    full_beer_options = {'withBreweries':'Y',
-                          'withSocialAccounts': 'Y',
-                          'withIngredients':'Y'}
-    search_options = {**{'type': 'beer', 
-                         'q': beer_name}, 
-                      **full_beer_options}
-
-    search_response = BreweryDB_request(uri=uri, 
-                                        endpoint='search', 
-                                        options = search_options,
-                                        api_key=api_key)
-    
-    return json.loads(search_response.text)
-    
+######################## 
+# Untappd Functions
+########################
 
 def login_untappd(untappd_username, untappd_password, driver):
     # login
@@ -168,4 +140,35 @@ def random_walk(n_users, starting_username, driver, db_path):
         users_scraped += 1
         print(users_scraped)
         username = find_next_friend(username, driver)
+
         
+######################### 
+# BreweryDB Functions
+########################
+def BreweryDB_request(uri, endpoint, options={}, api_key=""):
+    if api_key == "":
+        raise ValueError("Please pass in an API key")
+    else:
+        import requests
+        url = uri + '/' + endpoint + '/' 
+        options['key'] = api_key
+        response = requests.get(url, options)
+        return response
+
+def search_beer_BreweryDB(beer_name, api_key):
+    import json
+    uri = 'https://sandbox-api.brewerydb.com/v2'
+    full_beer_options = {'withBreweries':'Y',
+                          'withSocialAccounts': 'Y',
+                          'withIngredients':'Y'}
+    search_options = {**{'type': 'beer', 
+                         'q': beer_name}, 
+                      **full_beer_options}
+
+    search_response = BreweryDB_request(uri=uri, 
+                                        endpoint='search', 
+                                        options = search_options,
+                                        api_key=api_key)
+    
+    return json.loads(search_response.text)
+
