@@ -18,6 +18,7 @@ def get_beer_history(username, driver):
     import pandas as pd
     import math
     import time
+    import pickle
     
     # navigate
     print("navigating to user's profile...")
@@ -42,15 +43,18 @@ def get_beer_history(username, driver):
     print("retrieving beers...")
     clicks_made = 0
     while clicks_made < clicks_needed:
-        print("executing click number " + str(clicks_made+1) + " of " + str(clicks_needed))
         try:
+            print("executing click number " + str(clicks_made+1) + " of " + str(clicks_needed))
+            driver.execute_script("window.scrollTo(0, 10800)") 
+            time.sleep(1.5)
             driver.find_element_by_class_name("more-list-items").click()
             clicks_made += 1
         except:
-            time.sleep(10)
+            print('...')
+            time.sleep(5)
     
     # gather beers
-    beers = driver.find_elements_by_class_name("beer-item")
+    beers = driver.find_elements_by_class_name("beer-item")       
     print("retrieved all beers")
    
     # clean and consolidate data into df   
