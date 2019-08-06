@@ -5,6 +5,7 @@ env_keys.json
 /data
 test.py
 scratch.py
+/notebooks/old
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
