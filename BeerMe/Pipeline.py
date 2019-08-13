@@ -18,7 +18,7 @@ def pipeline_func(data, fns):
 #############################################   
 # 1. Import, Clean, EDA
 #############################################     
-def import_table(db_path = '../data/beer.db', 
+def import_table(db_path, 
                  table="user_extract",
                  remove_dups=True):
     
@@ -111,14 +111,18 @@ def impute_na(df, features = ['ABV', 'global_rating', 'user_rating', 'IBU'],
             non_nas = df[~df[feature].isna()][feature].astype(float)
             df[feature] = df[feature].fillna(0)
     
+    print("NA Count...")
     print(df.loc[:,features].isna().sum())
     
     return df
     
 
-def IMPORT_CLEAN_STEP():
-    df = import_table()
-    df = pipeline_func(df, [convert_categorical, outlier_analysis, impute_na])
+def IMPORT_CLEAN_STEP(db_path = '../data/beer.db', remove_outliers=False):
+    df = import_table(db_path)
+    if remove_outliers == False:
+        df = pipeline_func(df, [convert_categorical, outlier_analysis, impute_na])
+    elif remove_outliers == True:
+        df = pipeline_func(df, [convert_categorical, outlier_analysis, remove_outliers, impute_na])
     return df
 
 
@@ -194,27 +198,13 @@ def COSINE_STEP(df, user_of_reference='tsharp93'):
     ui_matrix = create_ui_matrix(df)
     sim_df = calculate_cosine_similarity(user_of_reference, ui_matrix)
     neighbor_rank = calculate_nearest_neighbors(sim_df)
-    merge_nearest_neighobr_rank(df, neighbor_rank)
+    df = merge_nearest_neighobr_rank(df, neighbor_rank)
     return df
     
 ######################################################   
 ### 3. Scale / Standardize Data 
 ######################################################   
-#### Select Features and Target
-
-#brewery_cols = [col for col in df if col.startswith('brewery_')]
-#beer_description_cols = [col for col in df if col.startswith('beer_description_')]
-#
-#features = ['ABV', 'IBU', 'global_rating'] + beer_description_cols
-#target = 'user_rating'
-#
-#print("REMINDER User of Reference = {}".format(user_of_reference))
-#
-
-
 def transform_features_target(df, features, target):
-#### Transform Features and Target Separately (easier to Inverse Transform later)
-
     X_scaler = StandardScaler()
     X_scaler.fit(df[features])
     df[features] = X_scaler.transform(df[features])
@@ -228,5 +218,3 @@ def transform_features_target(df, features, target):
     target_scaler = y_scaler 
     
     return(df, feature_scaler, target_scaler)
-    
-    
