@@ -18,12 +18,13 @@ def pipeline_func(data, fns):
 #############################################   
 # 1. Import, Clean, EDA
 #############################################     
+
+# @TODO - rename this function
 def import_table(db_path, 
-                 table="user_extract",
+                 query = "SELECT * FROM user_extract",
                  remove_dups=True):
     
     conn = sqlite3.connect(db_path)
-    query = "SELECT * FROM " + table
     df = pd.read_sql(query, conn)
     
     if remove_dups==True:
