@@ -1,0 +1,136 @@
+/*! CHARTS */
+
+.d3-chart {
+    overflow: auto;
+    &.chart-container {
+        height: 410px;
+    }
+    &.table-sorted {
+        max-height: 1200px;
+    }
+}
+/* Tooltips */
+.tooltip {
+    background: $white repeat scroll 0 0 $white;
+    background-color: $white;
+    border: 1px solid $cool-gray-9;
+    border-radius: 4px;
+    color: $black;
+    font-family: $font-family-default;
+    font-weight: $font-weight-regular;
+    font-size: $font-size-medium;
+    line-height: 24px;
+    height: auto;
+    padding: 10px;
+    pointer-events: none;
+    position: absolute;
+    text-align: left;
+    min-width: 50px;
+}
+
+.tooltip-title,
+.tooltip-trend {
+    font-weight: $font-weight-bold;
+}
+/* Bar charts style */
+.axis path {
+    fill: none;
+    stroke: $cool-gray-2;
+    stroke-width: 1px;
+}
+
+.axis line {
+    fill: none;
+    stroke: $cool-gray-7;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+}
+
+.axis text.label {
+    font-size: $font-size-small;
+    font-weight: $font-weight-bold;
+    fill: $cool-gray-10;
+}
+
+.axis .tick text {
+    font-size: $font-size-small;
+    fill: $cool-gray-10;
+}
+
+.grid .tick {
+    stroke: $cool-gray-2-gridline;
+}
+
+.grid path {
+    stroke-width: 0;
+}
+
+.break-word {
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+/* horizontal bar chart */
+.bar-horizontal {
+    text.value {
+        fill: $white;
+        text-anchor: middle;
+        display: none;
+    }
+    // On mouse hover, lighten color
+    rect:hover.bar {
+        fill-opacity: 0.9;
+    }
+}
+/* scatterplot */
+.scatterplot {
+    .dot {
+        stroke: $cool-gray-7;
+        fill-opacity: 0.6;
+        &:hover {
+            stroke: $blue-3;
+            stroke-width: 2px;
+        }
+        &.active {
+            stroke: $black;
+            stroke-width: 2px;
+        }
+    }
+}
+/* heatmap */
+.heatmap {
+    rect.selection {
+        stroke: $blue-4;
+        stroke-dasharray: 4px;
+        stroke-opacity: 0.5;
+        fill: transparent;
+    }
+
+    rect.cell-border {
+        stroke: $white;
+        stroke-width: 0.5px;
+    }
+
+    rect.cell-selected {
+        stroke: $blue-4;
+        stroke-width: 1px;
+    }
+
+    rect.cell-hover {
+        stroke: $blue-3;
+        stroke-width: 0.7px;
+    }
+
+    text.mono {
+        font-size: $font-size-small;
+        fill: $cool-gray-9;
+    }
+
+    text.text-selected {
+        fill: $blue-4;
+    }
+
+    text.text-highlight, text.text-hover {
+        fill: $blue-3;
+    }
+}

@@ -1,0 +1,38 @@
+/*! CONTAINERS */
+
+.application-container {
+  min-width: 100vw;
+  width: 100%;
+  max-width: 100vw;
+  min-height: 100vh;
+  height: auto;
+  max-height: 100vh;
+  overflow: hidden;
+  background: $frame-gray;
+}
+
+.main-container {
+  width: auto;
+  max-width: 1500px;
+  min-height: calc(100vh - 80px);
+  height: auto;
+  max-height: calc(100vh - 80px);
+  margin: 0 auto;
+}
+
+.template-container {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  height: auto;
+  max-height: calc(100vh - 80px);
+  padding: 10px 0px;
+}
+
+.card {
+  min-height: 1px;
+  background: $white;
+  border-radius: 3px;
+  border-color: $cool-gray-2;
+  margin-top: 20px;
+}
