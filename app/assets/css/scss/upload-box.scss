@@ -1,0 +1,49 @@
+/*! CTxE Starter App - upload box */
+
+.box__file {
+  display: none;
+}
+
+.box.highlight {
+  background-color: $teal-2;
+  border: 1px solid $teal-4;
+}
+
+.upload-pills>li {
+  float: none;
+  display: block;
+  position: relative;
+  width: 100%
+}
+
+.upload-pills>li>a.btn {
+  border: none;
+  padding: 10px 12px;
+  background-color: transparent;
+  color: $cool-gray-11;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  display: block;
+  position: relative;
+  text-align: left;
+  margin-bottom: 2px;
+}
+
+.upload-pills>li>a.btn:hover,
+.upload-pills>li>a.btn:focus {
+  background-color: $cool-gray-2;
+  width: 100%;
+}
+
+.upload-pills>li.active>a.btn {
+  color: $white;
+  background-color: $blue-3;
+  width: 100%;
+}
+
+.upload-pills>li.active>a.btn:hover,
+.upload-pills>li.active>a.btn:focus {
+  background: $blue-4;
+  box-shadow: none;
+}

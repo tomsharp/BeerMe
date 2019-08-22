@@ -1,0 +1,46 @@
+/*! NAVIGATION */
+
+.top-nav {
+  background: $black;
+  height: 56px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 50);
+}
+
+#deloitte-logo {
+    margin: 36px 30px;
+    height: 30px;
+}
+
+.main-nav {
+  background: $blue-1-nav;
+  height: 80px;
+  // move it down fixed by the height of the top nav
+  top: 56px;
+  .navbar-text {
+      margin: 25px 30px 20px -15px;
+  }
+}
+
+.ctxe-tm {
+  font-family: $font-family-default;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-logo;
+  margin: $font-size-large;
+  color: $black;
+  sup {
+    font-size: 1rem;
+    margin-left: -5px;
+  }
+  .ctxe-context {
+      color: $blue-6;
+      font-weight: $font-weight-bold;
+  }
+  .ctxe-edge {
+      margin-left: -10px;
+  }
+}
+
+body {
+    // padded for the height of the two nav bars
+    padding-top: 140px;
+}

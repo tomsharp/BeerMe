@@ -1,4 +1,5 @@
 # Project specific
+/app/config.json
 env_keys.json
 *.db
 /gitignore
