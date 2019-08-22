@@ -188,9 +188,7 @@ def calculate_nearest_neighbors(sim_df):
     return(neighbor_rank)
 
 def merge_nearest_neighobr_rank(df, neighbor_rank):    
-    print(df.shape)
     df = pd.merge(neighbor_rank, df, on='username', how='outer')
-    print(df.shape)
     
     return(df)
 
