@@ -193,7 +193,7 @@ def merge_nearest_neighobr_rank(df, neighbor_rank):
     return(df)
 
 
-def COSINE_STEP(df, user_of_reference='tsharp93'):
+def COSINE_STEP(df, user_of_reference):
     ui_matrix = create_ui_matrix(df)
     sim_df = calculate_cosine_similarity(user_of_reference, ui_matrix)
     neighbor_rank = calculate_nearest_neighbors(sim_df)
